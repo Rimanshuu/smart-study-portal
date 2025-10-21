@@ -6,7 +6,7 @@ import { Slider } from "./ui/slider";
 import { Badge } from "./ui/badge";
 import { Save, RotateCcw } from "lucide-react";
 import { useSpacedRepetition } from "./SpacedRepetitionContext";
-import { toast } from "sonner@2.0.3";
+import { toast } from "sonner";
 
 export function SpacedRepetitionSettings() {
   const { numRepetitions, dayGaps, setNumRepetitions, setDayGaps } = useSpacedRepetition();

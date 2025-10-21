@@ -10,6 +10,8 @@ import {
   SidebarMenuItem,
   SidebarProvider,
   SidebarTrigger,
+  SidebarInset,
+  useSidebar,
 } from "./components/ui/sidebar";
 import { CalendarView } from "./components/CalendarView";
 import { DashboardView } from "./components/DashboardView";
@@ -19,6 +21,7 @@ import { AccountView } from "./components/AccountView";
 import { LinksView } from "./components/LinksView";
 import { SpacedRepetitionSettings } from "./components/SpacedRepetitionSettings";
 import { SpacedRepetitionProvider } from "./components/SpacedRepetitionContext";
+import { Header } from "./components/Header";
 import { Switch } from "./components/ui/switch";
 import { Label } from "./components/ui/label";
 import { Toaster } from "./components/ui/sonner";
@@ -30,6 +33,7 @@ import {
   User,
   Link2,
   BrainCircuit,
+  Menu,
 } from "lucide-react";
 
 type ViewType =
@@ -42,8 +46,7 @@ type ViewType =
   | "spaced-repetition";
 
 export default function App() {
-  const [currentView, setCurrentView] =
-    useState<ViewType>("home");
+  const [currentView, setCurrentView] = useState<ViewType>("study-tracker");
   const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
@@ -77,9 +80,8 @@ export default function App() {
 
   return (
     <SpacedRepetitionProvider>
-      <SidebarProvider>
-        <div className="flex min-h-screen w-full">
-          <Sidebar>
+      <SidebarProvider defaultOpen={true}>
+        <Sidebar>
           <SidebarContent>
             <SidebarGroup>
               <SidebarGroupLabel className="text-gradient-primary">
@@ -98,9 +100,7 @@ export default function App() {
                   </SidebarMenuItem>
                   <SidebarMenuItem>
                     <SidebarMenuButton
-                      onClick={() =>
-                        setCurrentView("study-tracker")
-                      }
+                      onClick={() => setCurrentView("study-tracker")}
                       isActive={currentView === "study-tracker"}
                     >
                       <BookOpen className="h-4 w-4" />
@@ -118,9 +118,7 @@ export default function App() {
                   </SidebarMenuItem>
                   <SidebarMenuItem>
                     <SidebarMenuButton
-                      onClick={() =>
-                        setCurrentView("dashboards")
-                      }
+                      onClick={() => setCurrentView("dashboards")}
                       isActive={currentView === "dashboards"}
                     >
                       <LayoutDashboard className="h-4 w-4" />
@@ -162,10 +160,7 @@ export default function App() {
               <SidebarGroupLabel>Appearance</SidebarGroupLabel>
               <SidebarGroupContent>
                 <div className="flex items-center justify-between px-2 py-2">
-                  <Label
-                    htmlFor="dark-mode"
-                    className="cursor-pointer"
-                  >
+                  <Label htmlFor="dark-mode" className="cursor-pointer">
                     Dark Mode
                   </Label>
                   <Switch
@@ -179,30 +174,29 @@ export default function App() {
           </SidebarContent>
         </Sidebar>
 
-        <main className="flex-1 overflow-auto bg-background">
-          <div className="border-b border-border/50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-10">
-            <div className="flex h-16 items-center gap-4 px-6">
-              <SidebarTrigger />
-              <h1 className="text-gradient-primary">
-                {currentView === "home" && "Dashboard Overview"}
-                {currentView === "study-tracker" &&
-                  "Study Tracker"}
-                {currentView === "tasks" && "Task Manager"}
-                {currentView === "dashboards" &&
-                  "Analytics Dashboard"}
-                {currentView === "account" &&
-                  "Account Settings"}
-                {currentView === "links" && "Saved Links"}
-                {currentView === "spaced-repetition" &&
-                  "Spaced Repetition Settings"}
-              </h1>
-            </div>
-          </div>
-          <div className="p-6">{renderView()}</div>
-        </main>
-      </div>
-      <Toaster />
-    </SidebarProvider>
+        <SidebarInset>
+          <Header
+            title={
+              currentView === "home"
+                ? "Dashboard Overview"
+                : currentView === "study-tracker"
+                  ? "Study Tracker"
+                  : currentView === "tasks"
+                    ? "Task Manager"
+                    : currentView === "dashboards"
+                      ? "Analytics Dashboard"
+                      : currentView === "account"
+                        ? "Account Settings"
+                        : currentView === "links"
+                          ? "Saved Links"
+                          : "Spaced Repetition Settings"
+            }
+          />
+          <div className="flex-1 p-6">{renderView()}</div>
+        </SidebarInset>
+
+        <Toaster />
+      </SidebarProvider>
     </SpacedRepetitionProvider>
   );
 }

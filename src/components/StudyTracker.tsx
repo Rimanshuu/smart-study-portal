@@ -53,9 +53,9 @@ import {
   SelectValue,
 } from "./ui/select";
 import { Plus, Edit, Trash2, Calendar as CalendarIcon, ChevronDown, ChevronUp, Link, CheckCircle2, Clock, BookOpen, AlertTriangle, Archive, X, Filter } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useSpacedRepetition } from "./SpacedRepetitionContext";
-import { toast } from "sonner@2.0.3";
+import { toast } from "sonner";
 
 interface SpacedRepetition {
   completed: boolean;
@@ -1356,6 +1356,7 @@ export function StudyTracker() {
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious 
+                size="default"
                 onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                 className={currentPage === 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
               />
@@ -1371,6 +1372,7 @@ export function StudyTracker() {
                 return (
                   <PaginationItem key={page}>
                     <PaginationLink
+                      size="default"
                       onClick={() => setCurrentPage(page)}
                       isActive={currentPage === page}
                       className="cursor-pointer"
@@ -1390,7 +1392,8 @@ export function StudyTracker() {
             })}
             
             <PaginationItem>
-              <PaginationNext 
+              <PaginationNext
+                size="default" 
                 onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                 className={currentPage === totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
               />
@@ -1858,7 +1861,8 @@ export function StudyTracker() {
                   <Pagination>
                     <PaginationContent>
                       <PaginationItem>
-                        <PaginationPrevious 
+                        <PaginationPrevious
+                          size="default"
                           onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                           className={currentPage === 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
                         />
@@ -1874,6 +1878,7 @@ export function StudyTracker() {
                           return (
                             <PaginationItem key={page}>
                               <PaginationLink
+                                size="default"
                                 onClick={() => setCurrentPage(page)}
                                 isActive={currentPage === page}
                                 className="cursor-pointer"
@@ -1893,7 +1898,8 @@ export function StudyTracker() {
                       })}
                       
                       <PaginationItem>
-                        <PaginationNext 
+                        <PaginationNext
+                          size="default"
                           onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                           className={currentPage === totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
                         />
